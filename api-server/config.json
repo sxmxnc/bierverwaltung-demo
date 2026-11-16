@@ -1,0 +1,18 @@
+{
+  "server": {
+    "port": 3000,
+    "httpsPort": 8443
+  },
+  "db": {
+    "use": "psql",
+    "connect": {
+      "user": "myapp",
+      "host": "postgres",
+      "database": "myapp",
+      "password": "wifhm",
+      "port": {
+        "psql": 5432
+      }
+    }
+  }
+}

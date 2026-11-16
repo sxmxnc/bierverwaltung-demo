@@ -1,0 +1,52 @@
+/* Autor: Simon Cebula – Anpassung für die K.D.St.V. Sauerlandia */
+
+:host {
+  display: block;
+}
+
+.club-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.crest {
+  width: 112px;
+  height: auto;
+}
+
+.lettering {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.kdstv {
+  font-size: 0.95rem;
+  color: var(--band-blue);
+  letter-spacing: 0.02em;
+}
+
+.name {
+  margin: 4px 0 6px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--band-blue);
+}
+
+.cv {
+  font-size: 0.95rem;
+  color: var(--band-green);
+}
+
+@media (max-width: 380px) {
+  .crest {
+    width: 92px;
+  }
+  .name {
+    font-size: 1.85rem;
+  }
+}

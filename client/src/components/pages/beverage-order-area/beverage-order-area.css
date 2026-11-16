@@ -1,0 +1,32 @@
+/* Autor: Julius Vollmer (FH Münster) */
+
+:host {
+  display: block;
+  width: 100%;
+  padding: 2rem 0;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.order-area-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid var(--color-primary);
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 1rem;
+}

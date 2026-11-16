@@ -1,0 +1,90 @@
+/* Autor: Jonas Bergjürgen (FH Münster), angepasst für die K.D.St.V. Sauerlandia */
+
+:host {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.form-group input {
+  width: 100%;
+  height: 52px;
+  padding: 0 14px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 1.05rem;
+  box-sizing: border-box;
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.forgot-link {
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.error {
+  margin: 0 0 1rem;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-error) 15%, transparent);
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.btn-primary {
+  width: 100%;
+  height: 56px;
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  margin: 0.5rem 0 1rem;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+}
+
+.register-link {
+  text-align: center;
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.register-link a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: bold;
+}

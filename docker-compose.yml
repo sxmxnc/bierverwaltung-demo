@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: myapp
+      POSTGRES_PASSWORD: wifhm
+      POSTGRES_DB: myapp
+    volumes:
+      - demo_data:/var/lib/postgresql/data
+      - ./api-server/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./api-server/demo-data.sql:/docker-entrypoint-initdb.d/02-demo-data.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U myapp -d myapp"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PGHOST: postgres
+      PGSSL: disable
+      HTTPS_ENABLED: "false"
+      DEMO_LOGINS: "true"
+    ports:
+      - "127.0.0.1:3081:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  demo_data:

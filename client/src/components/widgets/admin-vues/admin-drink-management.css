@@ -1,0 +1,514 @@
+/* Autor: Julius Vollmer (FH Münster) Hilfe von Claude AI*/
+
+:host {
+  display: block;
+  font-family: var(--font-family, sans-serif);
+}
+
+.drink-mgmt-section {
+  padding: 24px;
+}
+
+/* Kopfbereich mit Titel und Aktionen */
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.section-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text);
+  margin: 0 0 4px 0;
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Toast */
+.toast-notification {
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.toast-notification.success {
+  background: color-mix(in srgb, var(--color-success) 18%, transparent);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.toast-notification.error {
+  background: color-mix(in srgb, var(--color-error) 14%, transparent);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+/* Loader / Error */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px;
+  color: var(--color-text-muted);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-container {
+  background: color-mix(in srgb, var(--color-error) 14%, transparent);
+  border: 1px solid var(--color-error);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  color: var(--color-error);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: 12px;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Kategorie-Karten */
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.category-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.category-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.category-card-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.item-count {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.empty-category {
+  padding: 20px;
+  color: var(--color-text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Tabelle */
+.drink-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.drink-table thead th {
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drink-table td {
+  padding: 14px 20px;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drink-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.drink-table tbody tr:hover {
+  background: var(--color-surface-alt);
+}
+
+.name-cell strong {
+  color: var(--color-text);
+}
+
+/* Zahlen rechtsbündig (Anhang: Zahlen rechts ausrichten) */
+.drink-table th.num,
+.drink-table td.num {
+  text-align: right;
+}
+
+.actions-head {
+  text-align: right;
+}
+
+/* Bestands-Badges */
+.stock-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.stock-badge.ok {
+  background: color-mix(in srgb, var(--color-success) 18%, transparent);
+  color: var(--color-success);
+}
+
+.stock-badge.low {
+  background: color-mix(in srgb, #e0a800 20%, transparent);
+  color: #b8860b;
+}
+
+.stock-badge.out {
+  background: color-mix(in srgb, var(--color-error) 16%, transparent);
+  color: var(--color-error);
+}
+
+.actions-cell {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition:
+    background 0.15s,
+    opacity 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-sm {
+  padding: 5px 11px;
+  font-size: 0.8rem;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--color-surface-alt);
+}
+
+.btn-danger {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--color-button-hover);
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modal-small {
+  max-width: 400px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: var(--color-text);
+  background: var(--color-surface-alt);
+}
+
+.modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.modal-body label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Zwei Felder nebeneinander */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.modal-body input,
+.modal-body select {
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  font-weight: 400;
+  transition: border-color 0.15s;
+}
+
+.modal-body input:focus,
+.modal-body select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent);
+}
+
+.current-stock {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.warning-text {
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Handy: Getränke-Tabelle wird zu Karten (Infos untereinander) */
+@media (max-width: 700px) {
+  /* weniger Außenabstand → mehr nutzbare Breite, kein horizontales Wischen */
+  .drink-mgmt-section {
+    padding: 16px 12px;
+  }
+
+  .drink-table thead {
+    display: none;
+  }
+
+  .drink-table,
+  .drink-table tbody,
+  .drink-table tr,
+  .drink-table td {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .drink-table tr {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 12px;
+    padding: 6px 14px;
+    background-color: var(--color-surface);
+  }
+
+  .drink-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--color-border);
+    text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Werte dürfen schrumpfen/umbrechen, Label behält seine Breite */
+  .drink-table td > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .drink-table td:last-child {
+    border-bottom: none;
+  }
+
+  .drink-table td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: left;
+  }
+
+  /* Name als Karten-Titel */
+  .drink-table td.name-cell {
+    display: block;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+  }
+
+  .drink-table td.name-cell::before {
+    content: none;
+  }
+
+  /* Aktionen: Label oben, Buttons in einer Reihe darunter */
+  .drink-table td.actions-cell {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+}
+
+/* Sauerlandia: Bier-Kennzeichen für die Rangliste */
+.checkbox-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-weight: 600;
+}

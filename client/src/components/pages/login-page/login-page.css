@@ -1,0 +1,125 @@
+/* Autor: Jonas Bergjürgen (FH Münster), angepasst für die K.D.St.V. Sauerlandia */
+
+:host {
+  display: block;
+  min-height: calc(100dvh - var(--navbar-height));
+  padding: 24px 16px 40px;
+  box-sizing: border-box;
+}
+
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  max-width: 980px;
+  margin: 3vh auto 0;
+}
+
+/* Holzschnitt wie ein angepinnter Druck – nur auf breiten Bildschirmen */
+.woodcut {
+  display: none;
+  margin: 0;
+  padding: 10px 10px 12px;
+  width: 340px;
+  flex-shrink: 0;
+  background: #f4efe1;
+  border-radius: 4px;
+  transform: rotate(-2deg);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.woodcut img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 860px) {
+  .woodcut {
+    display: block;
+  }
+}
+
+.login-container {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+  padding: 34px 24px 28px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  width: 100%;
+  max-width: 26rem;
+  box-sizing: border-box;
+}
+
+/* Band als oberer Rand der Karte */
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--band-height);
+  background: var(--band);
+}
+
+club-header {
+  margin-bottom: 18px;
+}
+
+h2 {
+  margin: 0 0 0.25rem 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--color-text);
+}
+
+h3 {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  font-weight: normal;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+.demo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 1.25rem;
+}
+
+.demo-title {
+  margin: 0 0 2px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.demo-link {
+  display: grid;
+  place-items: center;
+  min-height: 56px;
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+}
+
+.demo-link.theke {
+  color: var(--color-text-inverse);
+  background: var(--band-blue);
+}
+
+.demo-or {
+  margin: 6px 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}

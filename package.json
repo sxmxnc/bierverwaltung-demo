@@ -1,0 +1,13 @@
+{
+  "name": "sauerlandia-strichliste",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Digitale Strichliste der K.D.St.V. Sauerlandia – Build und Start als ein Prozess (Heroku, Railway, Render)",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "build": "npm ci --prefix client --include=dev && npm run build --prefix client && npm ci --prefix api-server --omit=dev",
+    "start": "npm run serve --prefix api-server"
+  }
+}

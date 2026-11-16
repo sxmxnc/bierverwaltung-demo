@@ -1,0 +1,28 @@
+/* Autor: Marius Middrup (FH Münster) */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 48px 24px;
+  color: var(--color-text-muted);
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  filter: grayscale(40%);
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.sub {
+  margin: 0;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,219 @@
+/* Autor: Simon Cebula – Anpassung für die K.D.St.V. Sauerlandia */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px calc(40px + env(safe-area-inset-bottom));
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+}
+
+.subtitle {
+  margin: 6px 0 18px;
+  color: var(--color-text-muted);
+}
+
+h2 {
+  margin: 22px 0 14px;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 6px;
+  border-radius: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.tabs button {
+  min-height: 52px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Siegertreppchen */
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: end;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.place {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 14px 8px 12px;
+  border-radius: 16px 16px 8px 8px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  text-align: center;
+  overflow: hidden;
+}
+
+.place::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--band-height);
+  background: var(--band);
+}
+
+.place-1 {
+  order: 2;
+  min-height: 190px;
+  border-color: var(--band-gold);
+}
+.place-2 {
+  order: 1;
+  min-height: 160px;
+}
+.place-3 {
+  order: 3;
+  min-height: 140px;
+}
+
+.place.me {
+  border-color: var(--color-accent);
+}
+
+.medal {
+  font-size: 2.4rem;
+  line-height: 1.1;
+  margin-top: 6px;
+}
+
+.place .name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.place .liters {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.place .count {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Restliche Plätze */
+.list {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 44px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  font-size: 1.05rem;
+}
+
+.row + .row {
+  border-top: 1px solid var(--color-border);
+}
+
+.row.me {
+  background: color-mix(in srgb, var(--color-accent) 16%, var(--color-surface));
+}
+
+.row .rank {
+  font-weight: 800;
+  color: var(--color-text-muted);
+}
+
+.row .name {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+.row .count {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.row .liters {
+  min-width: 64px;
+  text-align: right;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.gap {
+  margin: 6px 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.total {
+  margin-top: 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.empty,
+.error {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.error {
+  color: var(--color-error);
+}

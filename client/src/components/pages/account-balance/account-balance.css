@@ -1,0 +1,180 @@
+/* Autor: Marius Middrup (FH Münster), neu gestaltet für die K.D.St.V. Sauerlandia */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px calc(40px + env(safe-area-inset-bottom));
+}
+
+.balance-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: calc(28px + var(--band-height)) 20px 28px;
+  border-radius: 20px;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+/* Band oben, Zirkel als Wasserzeichen */
+.balance-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--band-height);
+  background: var(--band);
+}
+
+.balance-card::after {
+  content: '';
+  position: absolute;
+  right: 6%;
+  top: 50%;
+  width: 96px;
+  height: 128px;
+  transform: translateY(-46%) rotate(-8deg);
+  background: var(--color-text);
+  opacity: 0.07;
+  -webkit-mask: url('/images/sd-zirkel.png') center / contain no-repeat;
+  mask: url('/images/sd-zirkel.png') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.balance-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.balance-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.balance-amount {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 12vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.positive .balance-amount {
+  color: var(--color-success);
+}
+
+.negative .balance-amount {
+  color: var(--color-error);
+}
+
+.balance-hint {
+  max-width: 360px;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+h2 {
+  margin: 32px 0 4px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+}
+
+h3 {
+  margin: 20px 0 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.entry + .entry {
+  border-top: 1px solid var(--color-border);
+}
+
+.entry-icon {
+  flex-shrink: 0;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 6px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: var(--color-surface-alt);
+}
+
+.entry.deposit .entry-icon,
+.entry.sepa .entry-icon {
+  background: color-mix(in srgb, var(--color-accent) 22%, var(--color-surface));
+}
+
+.entry-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.entry-title {
+  font-weight: 600;
+}
+
+.entry-meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.entry-amount {
+  flex-shrink: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.entry-amount.plus {
+  color: var(--color-success);
+}
+
+.empty,
+.loading,
+.error {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.error {
+  color: var(--color-error);
+}

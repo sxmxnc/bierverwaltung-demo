@@ -1,0 +1,633 @@
+/* Autor: Simon Cebula – Anpassung für die K.D.St.V. Sauerlandia */
+
+:host {
+  display: block;
+  --page-max: 1100px;
+  --gutter: 16px;
+  --bar-height: 88px;
+  /* Alle Getränke-Kacheln gleich hoch, Zähler und "−" gleich groß */
+  --tile-height: 136px;
+  --tile-control: 44px;
+  --tile-pad-bottom: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 16px var(--gutter) calc(32px + env(safe-area-inset-bottom));
+}
+
+.page.has-bar {
+  padding-bottom: calc(var(--bar-height) + 40px + env(safe-area-inset-bottom));
+}
+
+/* --- Für wen ------------------------------------------------------------ */
+
+.target-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-bottom: 8px;
+}
+
+.target-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1.1rem;
+  max-width: 100%;
+}
+
+.target-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.target-name {
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  color: var(--color-text-muted);
+}
+
+.target-tip {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* Für jemand anderen: deutlich hervorheben, damit niemand aus Versehen falsch strichelt */
+.target-bar.other .target-chip {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 16%, var(--color-surface));
+}
+
+.target-bar.other .target-label {
+  color: var(--color-accent);
+}
+
+.back-to-me,
+.switch-person {
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.target-bar.theke {
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 14%, var(--color-surface));
+}
+
+.target-bar.theke .target-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.target-bar.theke .target-label {
+  color: var(--color-accent);
+}
+
+.target-bar.theke .target-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+}
+
+/* --- Getränke ----------------------------------------------------------- */
+
+.group-title {
+  margin: 28px 0 12px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+  grid-auto-rows: var(--tile-height);
+  gap: 12px;
+}
+
+@media (max-width: 359px) {
+  .tiles {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+}
+
+.tile-wrap {
+  position: relative;
+  height: 100%;
+}
+
+.tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 12px var(--tile-pad-bottom);
+  border-radius: 16px;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition:
+    transform 0.08s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.tile:active {
+  transform: scale(0.96);
+}
+
+.tile.active {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 15%, var(--color-surface));
+}
+
+.tile-name {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.18;
+  /* volle Breite, lange Namen höchstens zweizeilig */
+  hyphens: auto;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tile-unit {
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--color-primary);
+}
+
+/* Unterste Zeile: Preis – oder, sobald angetippt, der Zähler (gegenüber vom "−") */
+.tile-bottom {
+  margin-top: auto;
+  height: var(--tile-control);
+  display: flex;
+  align-items: center;
+}
+
+.tile-price {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.tile-count {
+  min-width: var(--tile-control);
+  height: var(--tile-control);
+  padding: 0 6px;
+  border-radius: calc(var(--tile-control) / 2);
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 1.4rem;
+  font-weight: 800;
+  animation: pop 0.18s ease;
+}
+
+.tile-minus {
+  position: absolute;
+  right: 12px;
+  /* auf einer Linie mit dem Zähler: Innenabstand unten + Rahmen */
+  bottom: calc(var(--tile-pad-bottom) + 2px);
+  width: var(--tile-control);
+  height: var(--tile-control);
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* --- Buchungsleiste ----------------------------------------------------- */
+
+.tally-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  gap: 10px;
+  padding: 12px max(var(--gutter), env(safe-area-inset-left)) calc(12px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--color-background) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--color-border);
+  animation: slide-up 0.2s ease both;
+}
+
+.tally-bar .clear {
+  flex-shrink: 0;
+  width: 64px;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1.3rem;
+}
+
+.tally-bar .submit {
+  flex: 1;
+  min-height: var(--bar-height);
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: none;
+  border-radius: 16px;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  box-shadow: 0 6px 24px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  touch-action: manipulation;
+}
+
+.tally-bar .submit:active {
+  background: var(--color-accent-hover);
+}
+
+.tally-bar .submit:disabled {
+  opacity: 0.7;
+}
+
+.submit-main {
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.submit-sub {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* --- Personenauswahl als Overlay ---------------------------------------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 900px;
+  /* feste Höhe, damit das Suchfeld beim Tippen nicht springt */
+  height: calc(100dvh - 24px);
+  overflow-y: auto;
+  padding: 20px var(--gutter) calc(24px + env(safe-area-inset-bottom));
+  border-radius: 20px 20px 0 0;
+  background: var(--color-background);
+  animation: slide-up 0.22s ease both;
+}
+
+@media (min-width: 768px) {
+  .overlay {
+    align-items: center;
+  }
+  .sheet {
+    border-radius: 20px;
+    height: min(calc(100dvh - 80px), 860px);
+  }
+}
+
+/* --- Bestätigung -------------------------------------------------------- */
+
+.confirm {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  animation: fade-in 0.15s ease both;
+}
+
+.confirm-box {
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 440px);
+  padding: 32px 24px 34px;
+  border-radius: 24px;
+  background: var(--color-surface);
+  border: 3px solid var(--color-accent);
+  text-align: center;
+}
+
+.check {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 3.4rem;
+  font-weight: 800;
+  animation: pop 0.25s ease;
+}
+
+.confirm-box h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+.confirm-for {
+  margin: 6px 0 12px;
+  font-size: 1.3rem;
+}
+
+.confirm-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.confirm-total {
+  margin: 10px 0 20px;
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+}
+
+.confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.confirm-actions button {
+  min-height: 60px;
+  border-radius: 14px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.confirm-actions .undo {
+  border: 2px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.confirm-actions .ok {
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* Countdown bis zum automatischen Schließen – als ablaufendes Band */
+.countdown {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 8px;
+  width: 100%;
+  background: var(--band);
+  transform-origin: left;
+  animation-name: countdown;
+  animation-duration: 5s; /* = CONFIRM_MS in strichel-page.ts */
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes countdown {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Letzte Buchungen --------------------------------------------------- */
+
+.recent {
+  margin-top: 40px;
+}
+
+.recent-hint {
+  margin: -4px 0 12px;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.recent ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recent li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.recent-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.recent-text span {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.recent-undo {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* --- Meldungen ---------------------------------------------------------- */
+
+.message {
+  position: fixed;
+  left: 50%;
+  top: calc(var(--navbar-height) + 12px);
+  transform: translateX(-50%);
+  z-index: 60;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  animation: fade-in 0.15s ease both;
+}
+
+.message.success {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.message.error {
+  background: var(--color-button);
+  color: #fff;
+}
+
+.load-error {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.btn-secondary {
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* --- Theke: großes Wappen als blasses Wasserzeichen hinter der Personenauswahl */
+
+.theke-crest {
+  position: fixed;
+  right: -3vw;
+  bottom: -4vh;
+  width: min(48vw, 480px);
+  height: auto;
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
+}
+
+.page.theke-picker {
+  position: relative;
+}
+
+/* --- Theke (iPad): kompakter, damit alle Getränke ohne Scrollen passen -- */
+
+.page.theke {
+  padding-top: 10px;
+}
+
+.page.theke .target-bar.theke {
+  padding: 6px 14px;
+}
+
+.page.theke .target-bar.theke .target-name {
+  font-size: 1.5rem;
+}
+
+.page.theke .group-title {
+  margin: 10px 0 6px;
+  font-size: 1.05rem;
+}
+
+.tally-bar.theke {
+  padding-top: 8px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+}
+
+.tally-bar.theke .submit {
+  min-height: 72px;
+}

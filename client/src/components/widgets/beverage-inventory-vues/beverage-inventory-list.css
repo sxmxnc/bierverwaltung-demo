@@ -1,0 +1,159 @@
+/* Autor: Julius Vollmer (FH Münster) mit Hilfe Claude AI */
+
+:host {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.inventory-container {
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.group-header th {
+  padding-top: 24px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  background: var(--color-surface-alt);
+}
+
+tbody tr:hover {
+  background-color: var(--color-hover);
+  transition: background-color 0.2s ease;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.price,
+.unit,
+.packaging {
+  color: var(--color-text-muted);
+}
+
+.stock-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.in-stock {
+  background: rgba(68, 131, 187, 0.1);
+  color: var(--color-primary);
+}
+
+.out-of-stock {
+  background: rgba(197, 52, 78, 0.1);
+  color: var(--color-error);
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+}
+
+/* Handy: Inventar-Tabelle wird zu Karten (Infos untereinander) */
+@media (max-width: 700px) {
+  /* kein horizontales Wischen – Inhalt bleibt in Bildschirmbreite */
+  .inventory-container {
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+
+  thead {
+    display: none;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Gruppen-Header bleibt als Abschnittstitel sichtbar */
+  .group-header th {
+    display: block;
+    padding: 12px 0 6px;
+  }
+
+  /* Datenzeilen werden zu Karten */
+  tbody tr:not(.group-header) {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 12px;
+    padding: 6px 14px;
+    background: var(--color-surface);
+  }
+
+  tbody tr:not(.group-header) td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--color-border);
+    text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Werte dürfen schrumpfen/umbrechen, Label behält seine Breite */
+  tbody tr:not(.group-header) td > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  tbody tr:not(.group-header) td:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:not(.group-header) td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: left;
+  }
+
+  /* Getränkename als Karten-Titel */
+  td.name {
+    display: block;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+  }
+
+  td.name::before {
+    content: none;
+  }
+}

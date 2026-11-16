@@ -1,0 +1,272 @@
+/* Autor: Julius Vollmer (FH Münster) mit Hilfe von CLaude AI*/
+
+:host {
+  display: block;
+  margin-top: 2rem;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+h3 {
+  margin-top: 0;
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.5rem;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cart-table th {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.cart-table td {
+  color: var(--color-text);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.buy-btn {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+}
+
+.buy-btn:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.buy-btn:active {
+  transform: translateY(0);
+}
+
+.buy-btn:disabled {
+  background: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.remove-btn {
+  background: transparent;
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.remove-btn:hover {
+  background: var(--color-error);
+  color: white;
+}
+
+.empty-msg {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qty-btn {
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.qty-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.qty-value {
+  min-width: 2ch;
+  text-align: center;
+  font-weight: 600;
+}
+
+.total-row td {
+  border-top: 2px solid var(--color-border);
+  border-bottom: none;
+  padding-top: 1rem;
+  font-size: 1.05rem;
+}
+
+.total-row td:last-child {
+  text-align: right;
+  color: var(--color-primary);
+}
+
+.status-banner {
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.status-banner.success {
+  background: color-mix(in srgb, #2e9e5b 14%, transparent);
+  color: #2e9e5b;
+  border-color: #2e9e5b;
+}
+
+.status-banner.error {
+  background: color-mix(in srgb, var(--color-error) 12%, transparent);
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+/* Handy: Warenkorb-Tabelle wird zu Karten (Infos untereinander) */
+@media (max-width: 700px) {
+  /* weniger Außenabstand → mehr nutzbare Breite, kein horizontales Wischen */
+  :host {
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+
+  .cart-table thead {
+    display: none;
+  }
+
+  .cart-table,
+  .cart-table tbody,
+  .cart-table tr,
+  .cart-table td {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .cart-table tbody tr {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 12px;
+    padding: 6px 14px;
+    background: var(--color-surface);
+  }
+
+  .cart-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--color-border);
+    text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Werte dürfen schrumpfen/umbrechen, Label behält seine Breite */
+  .cart-table tbody td > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .cart-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .cart-table tbody td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: left;
+  }
+
+  /* Name als Karten-Titel */
+  .cart-table tbody td.name-cell {
+    display: block;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .cart-table tbody td.name-cell::before {
+    content: none;
+  }
+
+  /* Löschen-Button volle Breite unter dem Label */
+  .cart-table tbody td.action-cell {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .cart-table tbody td.action-cell .remove-btn {
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  /* Gesamt-Zeile (tfoot): Label und Betrag nebeneinander */
+  .cart-table tfoot,
+  .cart-table tfoot tr,
+  .cart-table tfoot td {
+    display: block;
+    width: 100%;
+  }
+
+  .cart-table tfoot .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    margin-top: 4px;
+  }
+
+  .cart-table tfoot .total-row td {
+    border: none;
+    padding: 0;
+  }
+
+  .cart-table tfoot .total-row td:last-child {
+    width: auto;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "spec": ["e2e/src/**/*.e2e-spec.ts"],
+  "node-option": ["import=tsx"],
+  "no-warnings": true,
+  "timeout": "30000"
+}

@@ -1,0 +1,492 @@
+/* Autor: Julius Vollmer (FH Münster) mit Hilfe Claude AI */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-header h1 {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--color-text-muted);
+}
+
+h2 {
+  margin: 0 0 1rem;
+  color: var(--color-text);
+  font-size: 1.15rem;
+}
+
+h3 {
+  margin: 0 0 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* --- Tab-Leiste innerhalb der Statistik-Seite --- */
+.tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  padding: 0.75rem 1.1rem;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.hint {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin: -0.5rem 0 1rem;
+}
+
+/* --- KPI-Kacheln --- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+}
+
+.kpi-card.warn {
+  border-left-color: #e0a800;
+}
+
+.kpi-card.alert {
+  border-left-color: var(--color-error);
+}
+
+.kpi-label {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.kpi-value {
+  color: var(--color-text);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* --- Panels --- */
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Kopfzeile eines Panels mit Titel links und Umschalter rechts */
+.panel-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.panel-header-row h2 {
+  margin: 0;
+}
+
+.range-toggle {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.range-btn {
+  background: transparent;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.range-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Kleines Info-Symbol mit Tooltip neben einer Überschrift */
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-left: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-style: italic;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', serif;
+  cursor: help;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+
+  /* Handy: Panel-Tabellen werden zu Karten (Infos untereinander) */
+  .panel-table thead {
+    display: none;
+  }
+
+  .panel-table,
+  .panel-table tbody,
+  .panel-table tr,
+  .panel-table td {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .panel-table tbody tr {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 12px;
+    padding: 6px 14px;
+    background-color: var(--color-surface);
+  }
+
+  .panel-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--color-border);
+    text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Werte dürfen schrumpfen/umbrechen, Label behält seine Breite */
+  .panel-table tbody td > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .panel-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .panel-table tbody td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: left;
+  }
+
+  /* Getränkename als Karten-Titel */
+  .panel-table tbody td.name-cell {
+    display: block;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .panel-table tbody td.name-cell::before {
+    content: none;
+  }
+
+  /* Aktion: Button volle Breite unter dem Label */
+  .panel-table tbody td.action-cell {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+}
+
+.empty {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+/* --- Tabellen in Panels --- */
+.panel-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.panel-table th,
+.panel-table td {
+  text-align: left;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panel-table th {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.panel-table th.num,
+.panel-table td.num {
+  text-align: right;
+}
+
+/* Bestellungen als Lieferschein-Blöcke (Positionen je Bestellung gruppiert) */
+.purchase-orders {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.purchase-order {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.purchase-order-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--color-surface-alt);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.88rem;
+}
+
+.po-date {
+  color: var(--color-text-muted);
+}
+
+.po-buyer {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.po-total {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+/* Positionen einer Bestellung: Name flexibel, Menge + Betrag feste Breite -> nie verrutschen */
+.po-item {
+  display: grid;
+  grid-template-columns: 1fr 5rem 6.5rem;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.po-item:last-child {
+  border-bottom: none;
+}
+
+.po-item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.po-item-qty,
+.po-item-amount {
+  text-align: right;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.stock-badge {
+  display: inline-block;
+  min-width: 2rem;
+  text-align: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.stock-badge.low {
+  background: color-mix(in srgb, #e0a800 18%, transparent);
+  color: #b8860b;
+}
+
+.stock-badge.out {
+  background: color-mix(in srgb, var(--color-error) 16%, transparent);
+  color: var(--color-error);
+}
+
+/* --- Balkendiagramm --- */
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 11rem 1fr 2.5rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bar-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  background: var(--color-surface-alt);
+  border-radius: 999px;
+  height: 0.9rem;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.bar-value {
+  text-align: right;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+/* --- Buttons & Ladeanzeige --- */
+.btn {
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-small {
+  display: inline-block;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-small:hover {
+  background: var(--color-primary-hover);
+}
+
+.action-cell {
+  text-align: right;
+}
+
+.loader-container,
+.error-container {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-text-muted);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 1rem;
+  border: 4px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

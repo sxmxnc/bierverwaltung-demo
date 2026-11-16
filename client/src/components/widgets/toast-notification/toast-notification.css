@@ -1,0 +1,103 @@
+/* Autor: Marius Middrup (FH Münster) */
+/* Inspiriert von: https://react-hot-toast.com */
+
+:host {
+  position: fixed;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  pointer-events: none;
+  width: calc(100% - 32px);
+  max-width: 400px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--border-radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  pointer-events: auto;
+  animation: slide-in 0.22s ease;
+  border-left: 4px solid transparent;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.toast.closing {
+  animation: slide-out 0.22s ease forwards;
+}
+
+.toast.success {
+  border-left-color: var(--color-success);
+}
+
+.toast.error {
+  border-left-color: var(--color-error);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.icon.success {
+  color: var(--color-success);
+}
+
+.icon.error {
+  color: var(--color-error);
+}
+
+.message {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin: -10px -10px -10px 0;
+}
+
+.close:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-alt);
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}

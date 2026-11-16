@@ -1,0 +1,231 @@
+/* Autor: Simon Cebula – Anpassung für die K.D.St.V. Sauerlandia */
+
+:host {
+  display: block;
+  color: var(--color-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.section-header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.subtitle {
+  margin: 4px 0 18px;
+  color: var(--color-text-muted);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 16px;
+}
+
+.periods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.periods button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.periods button.active {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+input[type='search'] {
+  flex: 1;
+  min-width: 180px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.kpi span {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.kpi strong {
+  font-size: 1.3rem;
+}
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-top: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+}
+
+.row.head {
+  border-top: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: var(--color-surface-alt);
+}
+
+.row.member {
+  cursor: pointer;
+}
+
+.row.member:hover,
+.row.member.open {
+  background: var(--color-hover);
+}
+
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  min-width: 0;
+}
+
+.name small {
+  color: var(--color-text-muted);
+}
+
+.badge {
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--band-gold);
+  color: #1b1405;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.negative {
+  color: var(--color-error);
+  font-weight: 700;
+}
+
+.positive {
+  color: var(--color-success);
+}
+
+.details {
+  padding: 4px 14px 12px 28px;
+  background: var(--color-hover);
+}
+
+.details ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.details li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 0.95rem;
+}
+
+.empty,
+.error {
+  padding: 16px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.error {
+  color: var(--color-error);
+}
+
+/* Handy: Zahlen unter dem Namen statt Tabellenspalten */
+@media (max-width: 640px) {
+  .row.head {
+    display: none;
+  }
+  .row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .row .name {
+    grid-column: 1 / -1;
+  }
+  .row .num {
+    text-align: left;
+    font-size: 0.9rem;
+  }
+  .row .num::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+  .kpis {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

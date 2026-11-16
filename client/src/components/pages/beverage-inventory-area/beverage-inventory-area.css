@@ -1,0 +1,47 @@
+/* Autor: Julius Vollmer (FH Münster) */
+
+:host {
+  display: block;
+  padding: 2rem;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.inventory-header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: var(--text-primary, #333);
+}
+
+.order-link {
+  padding: 0.75rem 1.25rem;
+  background: var(--primary-color, #0056b3);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-link:hover {
+  background: var(--primary-hover, #004494);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.order-link:active {
+  transform: translateY(0);
+}

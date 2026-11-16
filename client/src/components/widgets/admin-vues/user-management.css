@@ -1,0 +1,765 @@
+/* Autor: Julius Vollmer (FH Münster) mit Hilfe Claude AI */
+
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-family, sans-serif);
+}
+
+/* Sektions-Kopf */
+.user-management-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-header h1 {
+  font-size: 1.8rem;
+  margin: 0 0 5px 0;
+  color: var(--color-text);
+}
+
+.section-header .subtitle {
+  font-size: 0.9rem;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+/* Suchleiste */
+.search-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+.search-icon-span {
+  position: absolute;
+  left: 12px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(68, 131, 187, 0.15);
+}
+
+/* Tabelle */
+.table-container {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.user-table th {
+  background-color: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.user-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.user-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-row:hover {
+  background-color: var(--color-hover);
+}
+
+.user-name-cell strong {
+  color: var(--color-text);
+}
+
+.no-results-cell {
+  text-align: center;
+  padding: 30px;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.table-footer {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  padding: 5px 10px;
+  text-align: right;
+}
+
+/* Badges */
+.role-badge,
+.status-badge,
+.balance-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Rollen */
+.role-badge.admin {
+  background-color: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  color: var(--color-primary);
+}
+
+.role-badge.theke {
+  background-color: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  color: var(--color-success);
+}
+
+.role-badge.kasse {
+  background-color: rgba(184, 160, 88, 0.2);
+  color: #b8860b;
+}
+
+.role-badge.beverage_manager {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #d97706;
+}
+
+.role-badge.user {
+  background-color: rgba(107, 114, 128, 0.15);
+  color: var(--color-text-muted);
+}
+
+/* Status */
+.status-badge.active {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.status-badge.suspended {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.status-badge.pending {
+  background-color: rgba(224, 168, 0, 0.18);
+  color: #b8860b;
+}
+
+.status-badge.inactive {
+  background-color: rgba(156, 163, 175, 0.15);
+  color: #6b7280;
+}
+
+/* Kontostand */
+.balance-badge.positive {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.balance-badge.negative {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.balance-badge.large {
+  font-size: 1.1rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* Modal Pop-up */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-content {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--border-radius) * 1.5);
+  width: 90%;
+  max-width: 750px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-alt);
+}
+
+.modal-header h2 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.modal-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 4px 0 0 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Details Cards */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  background-color: var(--color-surface-alt);
+}
+
+.detail-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 6px;
+  color: var(--color-primary);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.9rem;
+}
+
+.detail-row:not(:last-child) {
+  border-bottom: 1px dotted var(--color-border);
+}
+
+.detail-label {
+  color: var(--color-text-muted);
+}
+
+.detail-value {
+  font-weight: 500;
+  color: var(--color-text);
+  text-align: right;
+}
+
+.detail-value a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.detail-value a:hover {
+  text-decoration: underline;
+}
+
+/* SEPA Card */
+.sepa-card {
+  background-color: rgba(68, 131, 187, 0.03);
+  border-color: rgba(68, 131, 187, 0.15);
+}
+
+.sepa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+
+@media (max-width: 600px) {
+  .sepa-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sepa-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sepa-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.sepa-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.sepa-value {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.iban-code code,
+.sepa-field code {
+  font-family: Courier, monospace;
+  font-size: 0.95rem;
+  background-color: var(--color-surface);
+  padding: 4px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* Administrative Aktionen */
+.actions-card {
+  border-color: rgba(197, 52, 78, 0.15);
+}
+
+.actions-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .actions-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.action-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.action-block label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.admin-select {
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.admin-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* Kontostand korrigieren */
+.balance-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.balance-input {
+  width: 100%;
+  height: 38px;
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.balance-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(68, 131, 187, 0.15);
+}
+
+/* Native Number-Spinner ausblenden – einheitliches Erscheinungsbild */
+.balance-input::-webkit-outer-spin-button,
+.balance-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.balance-input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.btn.full-width {
+  width: 100%;
+}
+
+.btn-secondary {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-surface-alt);
+  border-color: var(--color-text-muted);
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #059669;
+}
+
+/* Ladeanzeigen */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  color: var(--color-text-muted);
+  gap: 12px;
+}
+
+.loading-icon-span {
+  animation: spin 1s linear infinite;
+  display: flex;
+  align-items: center;
+}
+
+.error-container {
+  text-align: center;
+  padding: 30px;
+  border: 1px solid #fecaca;
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border-radius: var(--border-radius);
+}
+
+/* Toasts */
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: white;
+  z-index: 1100;
+  font-weight: 500;
+  font-size: 0.9rem;
+  animation: slideUp 0.3s ease-out;
+}
+
+.toast-notification.success {
+  background-color: #10b981;
+}
+
+.toast-notification.error {
+  background-color: #ef4444;
+}
+
+/* Animationen */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Handy: Benutzer-Tabelle wird zu Karten (jede Zeile eine Karte mit Label: Wert) */
+@media (max-width: 700px) {
+  /* Auf dem Handy kein horizontales Wischen – Inhalt bleibt in Bildschirmbreite */
+  .table-container {
+    overflow-x: hidden;
+  }
+
+  .user-table thead {
+    display: none;
+    /* Spaltenköpfe entfallen – die Labels stehen pro Zeile */
+  }
+
+  .user-table,
+  .user-table tbody,
+  .user-table tr,
+  .user-table td {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .user-table tr.user-row {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 12px;
+    padding: 6px 14px;
+    background-color: var(--color-surface);
+  }
+
+  .user-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--color-border);
+    text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Werte (E-Mail, Wohnort ...) dürfen schrumpfen/umbrechen, Label nicht */
+  .user-table td > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .user-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Spaltenname (aus data-label) vor jeden Wert stellen */
+  .user-table td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: left;
+  }
+
+  /* Name als Karten-Titel: kein Label, eigene Zeile, etwas größer */
+  .user-table td.user-name-cell {
+    display: block;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+  }
+
+  .user-table td.user-name-cell::before {
+    content: none;
+  }
+
+  /* "Keine Treffer"-Zeile nicht aufteilen */
+  .user-table td.no-results-cell {
+    display: block;
+    text-align: center;
+  }
+
+  .user-table td.no-results-cell::before {
+    content: none;
+  }
+}
+
+/* Sauerlandia: Freischaltungen, V/o, Einzahlungen */
+.name-hint {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.pending-panel {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: var(--border-radius);
+  border: 2px solid #e0a800;
+  background: rgba(224, 168, 0, 0.1);
+}
+
+.pending-panel h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.pending-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pending-panel li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pending-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.payment-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr auto;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .payment-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}

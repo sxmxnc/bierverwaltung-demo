@@ -1,0 +1,56 @@
+/* Autor: Simon Cebula – Anpassung für die K.D.St.V. Sauerlandia */
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.form > label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+input[type='text'],
+input[type='number'] {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.drinks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+}
+
+.drink {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
+  font-size: 0.9rem;
+}
+
+.drink small {
+  display: block;
+  color: var(--color-text-muted);
+}
+
+.drink input {
+  text-align: right;
+}
+
+.summary {
+  margin-top: 4px;
+}

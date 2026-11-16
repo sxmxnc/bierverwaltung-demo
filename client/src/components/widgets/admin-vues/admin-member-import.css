@@ -1,0 +1,95 @@
+/* Autor: Simon Cebula – Anpassung für die K.D.St.V. Sauerlandia */
+
+code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--color-surface-alt);
+  font-size: 0.85em;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-weight: 400;
+  text-align: left;
+}
+
+button.kpi {
+  cursor: pointer;
+}
+
+.kpi.on {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.kpi span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.kpi strong {
+  font-size: 1.15rem;
+}
+
+.members .row {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 0.8fr) minmax(0, 1.6fr);
+}
+
+.members {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.debt {
+  color: var(--color-error);
+}
+
+.credit {
+  color: var(--color-success);
+}
+
+.status.anlegen {
+  background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  color: var(--color-success);
+}
+
+.status.zuordnen,
+.status.schon_uebernommen {
+  background: color-mix(in srgb, var(--color-primary) 16%, transparent);
+  color: var(--color-primary);
+}
+
+.status.fehler {
+  background: color-mix(in srgb, var(--color-error) 18%, transparent);
+  color: var(--color-error);
+}
+
+.error ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+}
+
+@media (max-width: 720px) {
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .members .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}

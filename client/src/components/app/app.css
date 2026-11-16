@@ -1,0 +1,13 @@
+/* Autor: Prof. Dr. Norman Lahme-Hütig (FH Münster) */
+* {
+  box-sizing: border-box;
+}
+
+main {
+  display: block;
+}
+
+.not-found {
+  padding: 24px;
+  text-align: center;
+}

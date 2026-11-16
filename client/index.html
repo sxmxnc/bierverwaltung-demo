@@ -1,0 +1,40 @@
+<!-- Autor: Prof. Dr. Norman Lahme-Hütig (FH Münster), angepasst für die K.D.St.V. Sauerlandia -->
+
+<!doctype html>
+<html lang="de" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <!--
+  Content Security Policy:
+  - default-src 'self'                        Fallback: nur Ressourcen vom eigenen Origin (auch Schriften)
+  - connect-src 'self'                        fetch nur an den eigenen Origin (API über Proxy)
+  - img-src 'self' data:                      Bilder vom eigenen Origin
+  - style-src 'self' 'unsafe-inline'          Lit nutzt auf älteren iPads <style>-Elemente
+  - object-src 'none'                         Keine Plugins (Flash etc.)
+  - base-uri 'self'                           <base href> darf nur auf eigenen Origin zeigen
+  - form-action 'self'                        Formulare nur an eigenen Origin
+-->
+    <title>Sauerlandia · Strichliste</title>
+    <base href="/" />
+    <meta name="theme-color" content="#0b1120" />
+    <!-- Als App auf dem Home-Bildschirm (z. B. Theken-iPad) ohne Browser-Leisten -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Strichliste" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <link rel="preload" href="./fonts/roboto-slab-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="./src/style.css" />
+    <script src="./src/index.ts" type="module"></script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>
